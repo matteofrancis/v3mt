@@ -1,0 +1,27 @@
+{
+  "name": "victoria3-mod-tools",
+  "version": "0.0.1",
+  "description": "",
+  "license": "ISC",
+  "author": "mattfrancis",
+  "type": "module",
+  "main": "bin/index.js",
+  "bin": {
+    "v3mt": "bin/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "push-local": "npm run build && npm install -g ."
+  },
+  "dependencies": {
+    "@inquirer/prompts": "^7.7.1",
+    "commander": "^14.0.0",
+    "figlet": "^1.8.2"
+  },
+  "devDependencies": {
+    "@types/figlet": "^1.7.0",
+    "@types/node": "^24.1.0",
+    "typescript": "^5.8.3"
+  }
+}
