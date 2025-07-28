@@ -1,8 +1,7 @@
 import fs from "fs";
-import path from "path";
 import { CommandUse } from "../types.js";
 import promptSelectFile from "../../tools/prompts/select-filesystem.js";
-import { confirm, input, select } from "@inquirer/prompts";
+import { confirm, select } from "@inquirer/prompts";
 import findGameDirectory from "../../util/filesystem/find-game-directory.js";
 import findErrorLog from "../../util/filesystem/find-error-log.js";
 import findMetadataFiles from "./findMetadataFiles.js";
@@ -12,8 +11,9 @@ import {
   getModFolderFromMetadataPath,
   readVic3Metadata,
 } from "../../util/config/vic3-metadata.js";
-import figlet from "figlet";
 import findGameModDirectory from "../../util/filesystem/find-game-mod-directory.js";
+import chalk from "chalk";
+import displayIntro from "./displayIntro.js";
 
 const use: CommandUse = (program) => {
   return program
@@ -28,7 +28,8 @@ export default init;
 async function task() {
   const configPath = Config.getConfigPath();
 
-  console.log(figlet.textSync("V3MT", { font: "Big" }));
+  // INTRO
+  displayIntro();
 
   // OS Confirmation
   if (process.platform !== "win32") {
@@ -41,7 +42,7 @@ async function task() {
     }
   }
 
-  // overwrite confirmation
+  // Overwrite confirmation
   if (fs.existsSync(configPath)) {
     const accept_overwrite = await confirm({
       message: `An existing config file was found at ${configPath}.\nOverwrite it?`,
@@ -94,36 +95,20 @@ async function task() {
     MOD_SOURCE_FOLDER = getModFolderFromMetadataPath(selection);
   }
 
-  // Confirm mod source folder
-  // const confirmModSource = await confirm({
-  //   message: `Is this the correct mod source folder? \n${MOD_SOURCE_FOLDER}`,
-  //   default: true,
-  // });
-
-  // if (!confirmModSource) {
-  //   console.log("Setup cancelled. Start over :)");
-  //   return;
-  // }
-
-  // TODO: Create the rest of the mod folder tree structure
-  // This would include directories like:
-  // - common/
-  // - events/
-  // - gfx/
-  // - localization/
-  // etc.
-
   // GAME_FOLDER
   const foundGameDirectory = findGameDirectory();
   if (!foundGameDirectory) {
     console.warn(
-      "Victoria 3 game directory not found in common Steam locations"
+      chalk.yellow(
+        "Victoria 3 game directory not found in common Steam locations"
+      )
     );
   }
   const GAME_FOLDER = await promptSelectFile({
     type: "folder",
     message:
       "Please select game folder (example: C:/Program Files (x86)/Steam/steamapps/common/Victoria 3/game)",
+    // TODO: set C:/Program Files (x86) to default if it exists
     default: foundGameDirectory ?? undefined,
     required: true,
   });
