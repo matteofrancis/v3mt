@@ -8,14 +8,15 @@ import {
   VSCodeTaskPresentation,
 } from "./types.js";
 
+const command = "create-vsc-tasks";
 const use: CommandUse = (program) => {
   return program
-    .command("create-vsc-tasks")
+    .command(command)
     .description("Send data to the game")
     .action(task);
 };
 
-const createVSCTasks = { use };
+const createVSCTasks = { use, command, task };
 export default createVSCTasks;
 
 async function task() {

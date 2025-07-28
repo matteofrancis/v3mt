@@ -2,11 +2,12 @@ import fs from "fs";
 import path from "path";
 import { CommandUse } from "./types.js";
 import { confirm } from "@inquirer/prompts";
-import { Config } from "../util/config/config.js";
+import { Config } from "../utils/config/config.js";
 
+const command = "send-to-game";
 const use: CommandUse = (program) => {
   return program
-    .command("send-to-game")
+    .command(command)
     .description("Send data to the game")
     .option("-y, --yes", "Skip confirmation prompt")
     .option(
@@ -16,7 +17,7 @@ const use: CommandUse = (program) => {
     .action(task);
 };
 
-const sendToGame = { use };
+const sendToGame = { use, command };
 export default sendToGame;
 
 interface Options {

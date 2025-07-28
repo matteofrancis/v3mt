@@ -1,10 +1,11 @@
 import { exec } from "child_process";
 import { CommandUse } from "./types.js";
-import { Config } from "../util/config/config.js";
+import { Config } from "../utils/config/config.js";
 
+const command = "open-game-folder";
 const use: CommandUse = (program) => {
   return program
-    .command("open-game-folder")
+    .command(command)
     .description("Open the game folder")
     .option(
       "-e, --explorer",
@@ -13,7 +14,7 @@ const use: CommandUse = (program) => {
     .action(task);
 };
 
-const openGameFolder = { use };
+const openGameFolder = { use, command };
 export default openGameFolder;
 
 interface Options {

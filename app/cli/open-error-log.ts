@@ -1,11 +1,12 @@
 import { exec } from "child_process";
 import path from "path";
 import { CommandUse } from "./types.js";
-import { Config } from "../util/config/config.js";
+import { Config } from "../utils/config/config.js";
 
+const command = "open-error-log";
 const use: CommandUse = (program) => {
   return program
-    .command("open-error-log")
+    .command(command)
     .description("Open the error log")
     .option("-e, --explorer", "Open in file explorer")
     .option("-t, --text", "Open in default text editor")
@@ -13,7 +14,7 @@ const use: CommandUse = (program) => {
     .action(task);
 };
 
-const openErrorLog = { use };
+const openErrorLog = { use, command };
 export default openErrorLog;
 
 interface Options {

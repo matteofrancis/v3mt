@@ -4,19 +4,20 @@ import { CommandUse } from "./types.js";
 
 const VICTORIA3_GAME_ID = "529340";
 
+const command = "launch-game";
 const use: CommandUse = (program) => {
   return program
-    .command("launch-game")
+    .command(command)
     .description("Launch the game")
     .option("-n, --no-debug", "Launch game without debug mode")
     .option("-i, --id <id>", "Steam Game ID", VICTORIA3_GAME_ID)
     .action(task);
 };
 
-const launchGame = { use };
+const launchGame = { use, command };
 export default launchGame;
 
-function task(options: { id?: string; debug?: boolean }) {
+function task(options: { noDebug?: boolean; id?: string }) {
   const steamGameId = options.id;
 
   if (!steamGameId) {
@@ -24,7 +25,7 @@ function task(options: { id?: string; debug?: boolean }) {
     process.exit(1);
   }
 
-  const debugArg = options.debug === false ? "" : "-debug_mode";
+  const debugArg = options.noDebug ? "" : "-debug_mode";
   const steamUrl = `steam://rungameid/${steamGameId}//${debugArg}`;
 
   const commands: Record<string, string> = {

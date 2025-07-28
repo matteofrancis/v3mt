@@ -1,6 +1,6 @@
 import fs from "fs";
 import { execSync } from "child_process";
-import getOSCommands from "../../util/os_commands/get-command.js";
+import getOSCommands from "../../utils/os_commands/get-command.js";
 import path from "path";
 
 export default function selectFolder(initialPath?: string) {

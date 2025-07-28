@@ -1,10 +1,11 @@
 import { exec } from "child_process";
 import { CommandUse } from "./types.js";
-import { Config } from "../util/config/config.js";
+import { Config } from "../utils/config/config.js";
 
+const command = "open-mod-folder";
 const use: CommandUse = (program) => {
   return program
-    .command("open-mod-folder")
+    .command(command)
     .description("Open the mod folder")
     .option(
       "-e, --explorer",
@@ -13,7 +14,7 @@ const use: CommandUse = (program) => {
     .action(task);
 };
 
-const errorLog = { use };
+const errorLog = { use, command };
 export default errorLog;
 
 interface Options {

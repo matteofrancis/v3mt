@@ -1,7 +1,7 @@
 import { input } from "@inquirer/prompts";
 import fs from "fs";
 import path from "path";
-import { Vic3Metadata } from "../../util/config/vic3-metadata.js";
+import { Vic3Metadata } from "../../../utils/config/vic3-metadata.js";
 
 export default async function createNewMod() {
   const modName = await input({
