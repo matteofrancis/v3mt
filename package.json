@@ -17,11 +17,9 @@
   "dependencies": {
     "@inquirer/prompts": "^7.7.1",
     "chalk": "^5.4.1",
-    "commander": "^14.0.0",
-    "figlet": "^1.8.2"
+    "commander": "^14.0.0"
   },
   "devDependencies": {
-    "@types/figlet": "^1.7.0",
     "@types/node": "^24.1.0",
     "typescript": "^5.8.3"
   }
