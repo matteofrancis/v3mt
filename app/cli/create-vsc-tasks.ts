@@ -20,9 +20,6 @@ const createVSCTasks = { use, command, task };
 export default createVSCTasks;
 
 async function task() {
-  const vscodeDir = await getVscodeDir();
-  const tasksFile = path.join(vscodeDir, "tasks.json");
-
   const defaultPresentation: VSCodeTaskPresentation = {
     echo: true,
     reveal: "always",
@@ -69,9 +66,8 @@ async function task() {
     },
   ];
 
-  if (!fs.existsSync(vscodeDir)) {
-    fs.mkdirSync(vscodeDir);
-  }
+  const vscodeDir = await getOrCreateVscodeDir();
+  const tasksFile = path.join(vscodeDir, "tasks.json");
 
   if (!fs.existsSync(tasksFile)) {
     const newContent = {
@@ -84,7 +80,7 @@ async function task() {
     return;
   }
 
-  let existing = getTasksFile(tasksFile);
+  let existing = readTasksFile(tasksFile);
 
   if (existing.version === undefined) {
     existing.version = "2.0.0";
@@ -123,29 +119,16 @@ async function task() {
   console.log(`Updated tasks.json at ${tasksFile}`);
 }
 
-async function getVscodeDir() {
+async function getOrCreateVscodeDir() {
   let vscodeDir = path.resolve(process.cwd(), ".vscode");
 
   if (!fs.existsSync(vscodeDir)) {
-    console.log("could not find .vscode folder");
-
-    const dir = await input({
-      message: "Please enter the path to your .vscode folder:",
-      default: vscodeDir,
-    });
-
-    if (!dir || !fs.existsSync(dir)) {
-      console.error("Invalid directory provided. Aborting.");
-      process.exit(1);
-    }
-
-    vscodeDir = path.resolve(dir);
+    fs.mkdirSync(vscodeDir, { recursive: true });
   }
-
   return vscodeDir;
 }
 
-function getTasksFile(tasksFile: string): VSCodeSettings | never {
+function readTasksFile(tasksFile: string): VSCodeSettings | never {
   try {
     return JSON.parse(fs.readFileSync(tasksFile, "utf8"));
   } catch (err) {

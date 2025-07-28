@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
-import { CommandUse } from "./types.js";
 import { confirm } from "@inquirer/prompts";
+import { CommandUse } from "./types.js";
 import { Config } from "../utils/config/config.js";
 
 const command = "send-to-game";

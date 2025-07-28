@@ -9,6 +9,7 @@ import openGameFolder from "./cli/open-game-folder.js";
 import openModFolder from "./cli/open-mod-folder.js";
 import sendToGame from "./cli/send-to-game.js";
 import createVSCTasks from "./cli/create-vsc-tasks.js";
+import setupModFolders from "./cli/setup-mod-folders.js";
 
 const program = new Command();
 
@@ -24,5 +25,6 @@ openGameFolder.use(program);
 openModFolder.use(program);
 sendToGame.use(program);
 createVSCTasks.use(program);
+setupModFolders.use(program);
 
 program.parse();

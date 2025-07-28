@@ -51,7 +51,7 @@ export class Config implements ConfigData {
 
   static fromFile(filePath?: string): Config {
     const configPath = filePath ?? Config.getConfigPath();
-
+    console.log(configPath);
     if (!fs.existsSync(configPath)) {
       throw new Error(
         `Config file not found at ${configPath}. Run 'v3mt init' to create one.`

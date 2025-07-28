@@ -3,9 +3,9 @@ import { OSCommands } from "./types.js";
 
 const windows: OSCommands = {
   folder: (initialPath) =>
-    `powershell -command "Add-Type -AssemblyName System.Windows.Forms; $f = New-Object System.Windows.Forms.FolderBrowserDialog; $f.SelectedPath = ${
-      initialPath ? `'${initialPath}'` : "Get-Location"
-    }; $f.Description = 'Select a folder'; $result = $f.ShowDialog(); if ($result -eq 'OK') { $f.SelectedPath } else { '' }"`,
+    `powershell -command "$shell = New-Object -ComObject Shell.Application; $folder = $shell.BrowseForFolder(0, 'Select a folder', 0, ${
+      initialPath ? `'${initialPath}'` : "0"
+    }); if ($folder) { $folder.Self.Path } else { '' }"`,
 
   file: (initialPath) => {
     if (initialPath) {

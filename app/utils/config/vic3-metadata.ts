@@ -3,11 +3,15 @@ import path from "path";
 
 export interface Vic3Metadata {
   name?: string;
+  id?: string;
   version?: string;
-  game_version?: string;
+  supported_game_version?: string;
   author?: string;
   short_description?: string;
+  relationships?: string;
+  tags: string[];
   description?: string;
+  game_custom_data?: { multiplayer_synchronized: boolean };
 }
 
 export function readVic3Metadata(filePath: string): Vic3Metadata | null {

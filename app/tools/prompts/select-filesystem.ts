@@ -13,6 +13,7 @@ import {
 import type { PartialDeep } from "@inquirer/type";
 import selectFile from "../directory-selector/select-file.js";
 import selectFolder from "../directory-selector/select-folder.js";
+
 type InputTheme = {
   validationFailureMode: "keep" | "clear";
 };
@@ -73,6 +74,7 @@ export default createPrompt<string, InputConfig>((config, done) => {
         config.type === "file"
           ? selectFile(config.default)
           : selectFolder(config.default);
+      console.log(response);
       setValue(response ?? "");
       setError(undefined);
 

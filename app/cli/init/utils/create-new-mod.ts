@@ -25,11 +25,17 @@ export default async function createNewMod() {
   // Create metadata.json with basic structure
   const metadata: Vic3Metadata = {
     name: modName,
-    version: "1.0.0",
-    game_version: "*",
-    author: "",
+    id: modName.replaceAll(" ", ""),
+    version: "0.0.1",
+    supported_game_version: "",
     short_description: "",
+    tags: [],
+    author: "",
+    relationships: "",
     description: "",
+    game_custom_data: {
+      multiplayer_synchronized: true,
+    },
   };
 
   fs.writeFileSync(metadataFilePath, JSON.stringify(metadata, null, 2));

@@ -1,4 +1,3 @@
-import { platform } from "os";
 import { exec } from "child_process";
 import { CommandUse } from "./types.js";
 
@@ -34,7 +33,7 @@ function task(options: { noDebug?: boolean; id?: string }) {
     linux: "xdg-open",
   };
 
-  const command = commands[platform()];
+  const command = commands[process.platform];
 
   if (!command) {
     console.error("Unsupported OS");

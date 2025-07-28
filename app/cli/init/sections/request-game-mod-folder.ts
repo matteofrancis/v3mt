@@ -1,5 +1,6 @@
 import promptSelectFile from "../../../tools/prompts/select-filesystem.js";
 import findGameModDirectory from "../../../utils/filesystem/find-game-mod-directory.js";
+import { cleanPath } from "../utils/clean-path.js";
 
 export default async function requestGameModFolder() {
   const foundGameModDirectory = findGameModDirectory();
@@ -11,5 +12,5 @@ export default async function requestGameModFolder() {
     required: true,
   });
 
-  return GAME_MOD_FOLDER;
+  return cleanPath(GAME_MOD_FOLDER);
 }
