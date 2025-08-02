@@ -1,6 +1,6 @@
 {
   "name": "v3mt",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A CLI toolkit for managing and deploying Victoria 3 mods, including sending mod files to the game, launching the game, and more.",
   "keywords": [
     "victoria 3",
