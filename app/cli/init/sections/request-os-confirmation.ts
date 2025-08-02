@@ -1,4 +1,4 @@
-import { confirm } from "@inquirer/prompts";
+import { confirm } from '@inquirer/prompts';
 
 export default async function requestOSConfirmation() {
   const accept_os_warning = await confirm({

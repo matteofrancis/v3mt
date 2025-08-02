@@ -1,12 +1,12 @@
-import { type Command } from "commander";
+import { type Command } from 'commander';
 
 export type CommandUse = (program: Command) => Command;
 
 export interface VSCodeTaskPresentation {
   echo?: boolean;
-  reveal?: "always" | "silent" | "never";
+  reveal?: 'always' | 'silent' | 'never';
   focus?: boolean;
-  panel?: "shared" | "dedicated" | "new";
+  panel?: 'shared' | 'dedicated' | 'new';
   showReuseMessage?: boolean;
   clear?: boolean;
 }
@@ -22,8 +22,8 @@ export interface VSCodeTask {
   dependsOn?: string | string[];
 }
 
-export interface VSCodeSettings {
-  version: string;
+export interface VSCodeTasks {
+  version?: string;
   presentation?: VSCodeTaskPresentation;
-  tasks: VSCodeTask[];
+  tasks?: VSCodeTask[];
 }

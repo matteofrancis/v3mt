@@ -11,7 +11,7 @@
     "noImplicitAny": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
-    "types": ["node"],
+    "types": ["node"]
   },
   "include": ["./app"],
   "exclude": ["node_modules", "bin"]

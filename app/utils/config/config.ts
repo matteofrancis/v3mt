@@ -1,6 +1,6 @@
-import path from "path";
-import fs from "fs";
-import { Vic3Metadata } from "./vic3-metadata.js";
+import path from 'path';
+import fs from 'fs';
+import { Vic3Metadata } from './vic3-metadata.js';
 
 export interface ConfigData {
   MOD_SOURCE_FOLDER: string;
@@ -29,36 +29,27 @@ export class Config implements ConfigData {
     this.GAME_MOD_FOLDER = config.GAME_MOD_FOLDER;
     this.MOD_DESTINATION_FOLDER =
       config.MOD_DESTINATION_FOLDER ??
-      Config.generateModDestinationFolder(
-        config.GAME_MOD_FOLDER,
-        config.MOD_SOURCE_FOLDER
-      );
+      Config.generateModDestinationFolder(config.GAME_MOD_FOLDER, config.MOD_SOURCE_FOLDER);
     this.ERROR_LOG = config.ERROR_LOG;
   }
 
-  static readonly V3MT_CONFIG_FILE_NAME = "v3mt.config.json";
+  static readonly V3MT_CONFIG_FILE_NAME = 'v3mt.config.json';
 
   static getConfigPath() {
     return path.resolve(process.cwd(), Config.V3MT_CONFIG_FILE_NAME);
   }
 
-  private static generateModDestinationFolder(
-    GAME_MOD_FOLDER: string,
-    MOD_SOURCE_FOLDER: string
-  ) {
+  private static generateModDestinationFolder(GAME_MOD_FOLDER: string, MOD_SOURCE_FOLDER: string) {
     return path.join(GAME_MOD_FOLDER, path.basename(MOD_SOURCE_FOLDER));
   }
 
   static fromFile(filePath?: string): Config {
     const configPath = filePath ?? Config.getConfigPath();
-    console.log(configPath);
     if (!fs.existsSync(configPath)) {
-      throw new Error(
-        `Config file not found at ${configPath}. Run 'v3mt init' to create one.`
-      );
+      throw new Error(`Config file not found at ${configPath}. Run 'v3mt init' to create one.`);
     }
 
-    const raw = fs.readFileSync(configPath, "utf-8");
+    const raw = fs.readFileSync(configPath, 'utf-8');
     const data = JSON.parse(raw);
     return new Config(data);
   }
@@ -78,12 +69,12 @@ export class Config implements ConfigData {
   }
 
   getMetadataFile(): string {
-    return path.join(this.MOD_SOURCE_FOLDER, ".metadata", "metadata.json");
+    return path.join(this.MOD_SOURCE_FOLDER, '.metadata', 'metadata.json');
   }
 
   getMetadata(): Vic3Metadata | null {
     try {
-      return JSON.parse(fs.readFileSync(this.getMetadataFile(), "utf8"));
+      return JSON.parse(fs.readFileSync(this.getMetadataFile(), 'utf8'));
     } catch {
       return null;
     }

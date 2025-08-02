@@ -1,32 +1,30 @@
-import fs from "fs";
-import path from "path";
-import { CommandUse } from "./types.js";
-import { Config } from "../utils/config/config.js";
+import fs from 'fs';
+import path from 'path';
+import { CommandUse } from './types.js';
+import { Config } from '../utils/config/config.js';
+import Logger from '../utils/logger/logger.js';
 
 const FOLDER_STRUCTURE = [
-  "common",
-  "common/buildings",
-  "common/goods",
-  "common/modifier_type_definitions",
-  "common/production_methods",
-  "common/production_method_groups",
-  "common/script_values",
-  "gfx",
-  "gfx/interface",
-  "gfx/interface/icons",
-  "gfx/interface/icons/building_icons",
-  "gfx/interface/icons/goods_icons",
-  "gfx/interface/icons/production_method_icons",
-  "localization",
-  "localization/english",
+  'common',
+  'common/buildings',
+  'common/goods',
+  'common/modifier_type_definitions',
+  'common/production_methods',
+  'common/production_method_groups',
+  'common/script_values',
+  'gfx',
+  'gfx/interface',
+  'gfx/interface/icons',
+  'gfx/interface/icons/building_icons',
+  'gfx/interface/icons/goods_icons',
+  'gfx/interface/icons/production_method_icons',
+  'localization',
+  'localization/english',
 ];
 
-const command = "setup-mod-folders";
+const command = 'setup-mod-folders';
 const use: CommandUse = (program) => {
-  return program
-    .command(command)
-    .description("sets up common mod folders")
-    .action(task);
+  return program.command(command).description('sets up common mod folders').action(task);
 };
 
 const setupModFolders = { use, command, task };
@@ -37,8 +35,7 @@ async function task() {
   const modSource = config.MOD_SOURCE_FOLDER;
 
   if (!modSource) {
-    console.error("MOD_SOURCE_FOLDER config setting is not set.");
-    process.exit(1);
+    Logger.kill("MOD_SOURCE_FOLDER config setting is not set. Please run 'v3mt init'");
   }
 
   for (const folder of FOLDER_STRUCTURE) {
@@ -46,9 +43,9 @@ async function task() {
 
     if (!fs.existsSync(folderPath)) {
       fs.mkdirSync(folderPath, { recursive: true });
-      console.log(`   ✅ Created: ${folder}`);
+      Logger.pass(`Created: ${folder}`);
     } else {
-      console.log(`   ⏭️  Exists: ${folder}`);
+      Logger.info(`Exists: ${folder}`);
     }
   }
 }

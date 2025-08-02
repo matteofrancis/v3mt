@@ -1,5 +1,5 @@
-import fs from "fs";
-import path from "path";
+import fs from 'fs';
+import path from 'path';
 
 export interface Vic3Metadata {
   name?: string;
@@ -16,7 +16,7 @@ export interface Vic3Metadata {
 
 export function readVic3Metadata(filePath: string): Vic3Metadata | null {
   try {
-    return JSON.parse(fs.readFileSync(filePath, "utf8"));
+    return JSON.parse(fs.readFileSync(filePath, 'utf8'));
   } catch {
     return null;
   }

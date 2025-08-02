@@ -1,12 +1,12 @@
-import { getLinuxTool } from "./get-linux-tool.js";
-import os_commands from "./os_commands.js";
-import { LinuxTool, LinuxTools, OSCommands } from "./types.js";
+import { getLinuxTool } from './get-linux-tool.js';
+import os_commands from './os_commands.js';
+import { LinuxTool, LinuxTools, OSCommands } from './types.js';
 
 function getOSCommands(linuxTool?: LinuxTool): OSCommands {
   switch (process.platform) {
-    case "win32":
+    case 'win32':
       return os_commands.windows;
-    case "darwin":
+    case 'darwin':
       return os_commands.macos;
     default:
       const tool = linuxTool || getLinuxTool();

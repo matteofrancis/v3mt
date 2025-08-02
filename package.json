@@ -1,14 +1,36 @@
 {
-  "name": "victoria3-mod-tools",
-  "version": "0.0.1",
-  "description": "",
-  "license": "ISC",
-  "author": "mattfrancis",
+  "name": "v3mt",
+  "version": "1.0.0",
+  "description": "A CLI toolkit for managing and deploying Victoria 3 mods, including sending mod files to the game, launching the game, and more.",
+  "keywords": [
+    "victoria 3",
+    "modding",
+    "cli",
+    "tools",
+    "paradox",
+    "game",
+    "automation"
+  ],
+  "homepage": "https://github.com/matteofrancis/v3mt#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/matteofrancis/v3mt.git"
+  },
+  "bugs": {
+    "url": "https://github.com/matteofrancis/v3mt/issues"
+  },
+  "license": "MIT",
+  "author": "matteofrancis",
   "type": "module",
   "main": "bin/index.js",
   "bin": {
     "v3mt": "bin/index.js"
   },
+  "files": [
+    "bin/",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "build": "tsc",
     "watch": "tsc --watch",
@@ -17,10 +39,15 @@
   "dependencies": {
     "@inquirer/prompts": "^7.7.1",
     "chalk": "^5.4.1",
-    "commander": "^14.0.0"
+    "commander": "^14.0.0",
+    "jsonc-parser": "^3.3.1"
   },
   "devDependencies": {
     "@types/node": "^24.1.0",
+    "prettier": "^3.6.2",
     "typescript": "^5.8.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }

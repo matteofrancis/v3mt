@@ -1,4 +1,4 @@
-import { confirm } from "@inquirer/prompts";
+import { confirm } from '@inquirer/prompts';
 
 export default async function requestOverwriteConfirmation(configPath: string) {
   const accept_overwrite = await confirm({

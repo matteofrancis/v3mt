@@ -1,7 +1,7 @@
-import fs from "fs";
-import { execSync } from "child_process";
-import path from "path";
-import getOSCommands from "../../utils/os_commands/get-command.js";
+import fs from 'fs';
+import { execSync } from 'child_process';
+import path from 'path';
+import getOSCommands from '../../utils/os_commands/get-command.js';
 
 export default function selectFolder(initialPath?: string) {
   try {
@@ -9,8 +9,8 @@ export default function selectFolder(initialPath?: string) {
     const command = commands.folder(initialPath);
 
     const result = execSync(command, {
-      encoding: "utf8",
-      stdio: ["pipe", "pipe", "ignore"], // Suppress stderr to avoid noise
+      encoding: 'utf8',
+      stdio: ['pipe', 'pipe', 'ignore'], // Suppress stderr to avoid noise
     }).trim();
 
     if (result && fs.existsSync(result) && fs.statSync(result).isDirectory()) {
@@ -20,7 +20,7 @@ export default function selectFolder(initialPath?: string) {
     return null;
   } catch (error) {
     //@ts-ignore
-    console.error("Failed to open folder dialog:", error.message);
+    console.error('Failed to open folder dialog:', error.message);
     return null;
   }
 }

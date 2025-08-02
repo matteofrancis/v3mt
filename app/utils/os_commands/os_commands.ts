@@ -1,10 +1,10 @@
-import path from "path";
-import { OSCommands } from "./types.js";
+import path from 'path';
+import { OSCommands } from './types.js';
 
 const windows: OSCommands = {
   folder: (initialPath) =>
     `powershell -command "$shell = New-Object -ComObject Shell.Application; $folder = $shell.BrowseForFolder(0, 'Select a folder', 0, ${
-      initialPath ? `'${initialPath}'` : "0"
+      initialPath ? `'${initialPath}'` : '0'
     }); if ($folder) { $folder.Self.Path } else { '' }"`,
 
   file: (initialPath) => {
@@ -20,7 +20,7 @@ const windows: OSCommands = {
 const macos: OSCommands = {
   folder: (initialPath) =>
     `osascript -e 'try' -e 'tell application "System Events" to set selectedFolder to choose folder${
-      initialPath ? ` default location (POSIX file "${initialPath}")` : ""
+      initialPath ? ` default location (POSIX file "${initialPath}")` : ''
     } with prompt "Select a folder:"' -e 'POSIX path of selectedFolder' -e 'on error' -e '""' -e 'end try'`,
 
   file: (initialPath) => {
@@ -35,45 +35,29 @@ const macos: OSCommands = {
 const zenity: OSCommands = {
   folder: (initialPath) =>
     `zenity --file-selection --directory --title="Select a folder"${
-      initialPath ? ` --filename="${initialPath}/"` : ""
+      initialPath ? ` --filename="${initialPath}/"` : ''
     }`,
   file: (initialPath) =>
-    `zenity --file-selection --title="Select a file"${
-      initialPath ? ` --filename="${initialPath}"` : ""
-    }`,
+    `zenity --file-selection --title="Select a file"${initialPath ? ` --filename="${initialPath}"` : ''}`,
 };
 
 const kdialog: OSCommands = {
-  folder: (initialPath) =>
-    `kdialog --getexistingdirectory ${
-      initialPath ? `"${initialPath}"` : "."
-    } "Select a folder"`,
-  file: (initialPath) =>
-    `kdialog --getopenfilename ${
-      initialPath ? `"${initialPath}"` : "."
-    } "All files (*)"`,
+  folder: (initialPath) => `kdialog --getexistingdirectory ${initialPath ? `"${initialPath}"` : '.'} "Select a folder"`,
+  file: (initialPath) => `kdialog --getopenfilename ${initialPath ? `"${initialPath}"` : '.'} "All files (*)"`,
 };
 
 const yad: OSCommands = {
   folder: (initialPath) =>
-    `yad --file-selection --directory --title="Select a folder"${
-      initialPath ? ` --filename="${initialPath}/"` : ""
-    }`,
+    `yad --file-selection --directory --title="Select a folder"${initialPath ? ` --filename="${initialPath}/"` : ''}`,
   file: (initialPath) =>
-    `yad --file-selection --title="Select a file"${
-      initialPath ? ` --filename="${initialPath}"` : ""
-    }`,
+    `yad --file-selection --title="Select a file"${initialPath ? ` --filename="${initialPath}"` : ''}`,
 };
 
 const qarma: OSCommands = {
   folder: (initialPath) =>
-    `qarma --file-selection --directory --title="Select a folder"${
-      initialPath ? ` --filename="${initialPath}/"` : ""
-    }`,
+    `qarma --file-selection --directory --title="Select a folder"${initialPath ? ` --filename="${initialPath}/"` : ''}`,
   file: (initialPath) =>
-    `qarma --file-selection --title="Select a file"${
-      initialPath ? ` --filename="${initialPath}"` : ""
-    }`,
+    `qarma --file-selection --title="Select a file"${initialPath ? ` --filename="${initialPath}"` : ''}`,
 };
 
 const os_commands = { windows, macos, zenity, kdialog, yad, qarma };

@@ -1,5 +1,5 @@
-import fs from "fs";
-import path from "path";
+import fs from 'fs';
+import path from 'path';
 
 export default function findModSourceDirectory(searchPath = process.cwd()) {
   try {
@@ -11,11 +11,7 @@ export default function findModSourceDirectory(searchPath = process.cwd()) {
       try {
         const stat = fs.statSync(fullPath);
         if (stat.isDirectory()) {
-          const metadataPath = path.join(
-            fullPath,
-            ".metadata",
-            "metadata.json"
-          );
+          const metadataPath = path.join(fullPath, '.metadata', 'metadata.json');
           if (fs.existsSync(metadataPath)) {
             return fullPath;
           }
@@ -29,7 +25,7 @@ export default function findModSourceDirectory(searchPath = process.cwd()) {
     return null;
   } catch (error) {
     //@ts-ignore
-    console.error("Failed to search for metadata directory:", error?.message);
+    console.error('Failed to search for metadata directory:', error?.message);
     return null;
   }
 }
