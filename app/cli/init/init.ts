@@ -61,7 +61,7 @@ async function task(options: { skipIntro?: boolean; yesOsWarning?: boolean; yesO
     newConfig.saveToFile(configPath);
 
     Logger.info(`Config file created at: ${configPath}`);
-    Logger.text(newConfig);
+    Logger.text(JSON.stringify(newConfig, null, 2));
   }
 
   const confirmSetupModFolders = await confirm({

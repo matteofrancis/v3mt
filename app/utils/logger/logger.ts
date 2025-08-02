@@ -1,28 +1,30 @@
-const Logger = {
-  pass: (message: string): void => {
-    console.log(`✅ ${message}`);
-  },
+import chalk from 'chalk';
 
-  text: (message?: any, ...optionalParams: any[]): void => {
-    console.log(message, ...optionalParams);
-  },
+class Logger {
+  static pass(message: string): void {
+    console.log(chalk.green(`✅ ${message}`));
+  }
 
-  info: (message: string): void => {
-    console.log(`ℹ️  ${message}`);
-  },
+  static text(message?: any, ...optionalParams: any[]): void {
+    console.log(chalk.white(message), ...optionalParams);
+  }
 
-  warn: (message: string): void => {
-    console.warn(`⚠️  ${message}`);
-  },
+  static info(message: string): void {
+    console.log(chalk.blue(`ℹ️  ${message}`));
+  }
 
-  fail: (message: string): void => {
-    console.error(`❌ ${message}`);
-  },
+  static warn(message: string): void {
+    console.warn(chalk.yellow(`⚠️  ${message}`));
+  }
 
-  kill: (message: string, code: number = 1): void => {
-    console.error(`❌ ${message}`);
-    process.exit(code);
-  },
-};
+  static fail(message: string): void {
+    console.error(chalk.red(`❌ ${message}`));
+  }
+
+  static kill(message: string, code: number = 1): never {
+    console.error(chalk.red.bold(`❌ ${message}`));
+    return process.exit(code);
+  }
+}
 
 export default Logger;

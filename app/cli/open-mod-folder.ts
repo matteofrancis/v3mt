@@ -1,6 +1,7 @@
 import { exec } from 'child_process';
 import { CommandUse } from './types.js';
 import { Config } from '../utils/config/config.js';
+import Logger from '../utils/logger/logger.js';
 
 const command = 'open-mod-folder';
 const use: CommandUse = (program) => {
@@ -23,8 +24,7 @@ function task(options: Options) {
   const folder = config.GAME_MOD_FOLDER;
 
   if (!folder) {
-    console.error('GAME_MOD_FOLDER environment variable is not set.');
-    process.exit(1);
+    Logger.kill('GAME_MOD_FOLDER environment variable is not set.');
   }
 
   const platform = process.platform;
@@ -43,8 +43,7 @@ function task(options: Options) {
         cmd = `xdg-open "${folder}"`;
         break;
       default:
-        console.error('Unsupported OS for opening explorer.');
-        process.exit(1);
+        Logger.kill(`Unsupported platform: ${platform}`);
     }
   } else {
     cmd = `code "${folder}"`;
@@ -52,8 +51,7 @@ function task(options: Options) {
 
   exec(cmd, (error, stdout, stderr) => {
     if (error) {
-      console.error(`Error opening mod folder: ${stderr || stdout || error.message}`);
-      process.exit(1);
+      Logger.kill(`Error opening mod folder: ${stderr || stdout || error.message}`);
     }
   });
 }

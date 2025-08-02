@@ -2,6 +2,7 @@ import { exec } from 'child_process';
 import path from 'path';
 import { CommandUse } from './types.js';
 import { Config } from '../utils/config/config.js';
+import Logger from '../utils/logger/logger.js';
 
 const command = 'open-error-log';
 const use: CommandUse = (program) => {
@@ -28,8 +29,7 @@ function task(options: Options) {
   const file = config.ERROR_LOG;
 
   if (!file) {
-    console.error('ERROR_LOG environment variable is not set.');
-    process.exit(1);
+    Logger.kill('ERROR_LOG environment variable is not set.');
   }
 
   let cmd: string;
@@ -46,8 +46,7 @@ function task(options: Options) {
         cmd = `xdg-open "${path.dirname(file)}"`;
         break;
       default:
-        console.error('Unsupported OS for opening explorer.');
-        process.exit(1);
+        Logger.kill(`Unsupported platform: ${process.platform}`);
     }
   } else if (options.text) {
     switch (process.platform) {
@@ -61,8 +60,7 @@ function task(options: Options) {
         cmd = `xdg-open "${file}"`;
         break;
       default:
-        console.error('Unsupported OS for opening text editor.');
-        process.exit(1);
+        Logger.kill(`Unsupported platform: ${process.platform}`);
     }
   } else {
     cmd = `code "${file}" ${options.newWindow ? '-n' : ''}`;
@@ -70,8 +68,7 @@ function task(options: Options) {
 
   exec(cmd, (error, stdout, stderr) => {
     if (error) {
-      console.error(`Error opening error log: ${stderr || stdout || error.message}`);
-      process.exit(1);
+      Logger.kill(`Error opening error log: ${stderr || stdout || error.message}`);
     }
   });
 }

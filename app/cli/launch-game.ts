@@ -1,5 +1,6 @@
 import { exec } from 'child_process';
 import { CommandUse } from './types.js';
+import Logger from '../utils/logger/logger.js';
 
 const VICTORIA3_GAME_ID = '529340';
 
@@ -20,8 +21,7 @@ function task(options: { noDebug?: boolean; id?: string }) {
   const steamGameId = options.id;
 
   if (!steamGameId) {
-    console.error('Steam Game ID is not set.');
-    process.exit(1);
+    Logger.kill('Steam Game ID is not set.');
   }
 
   const debugArg = options.noDebug ? '' : '-debug_mode';
@@ -36,14 +36,12 @@ function task(options: { noDebug?: boolean; id?: string }) {
   const command = commands[process.platform];
 
   if (!command) {
-    console.error(`Unsupported OS: ${process.platform}`);
-    process.exit(1);
+    Logger.kill(`Unsupported platform: ${process.platform}`);
   }
 
   exec(`${command} "${steamUrl}"`, (error, stdout, stderr) => {
     if (error) {
-      console.error(`Error opening game: ${stderr || stdout || error.message}`);
-      process.exit(1);
+      Logger.kill(`Error launching game: ${stderr || stdout || error.message}`);
     }
   });
 }

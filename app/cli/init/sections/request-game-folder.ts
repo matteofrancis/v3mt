@@ -1,11 +1,12 @@
 import promptSelectFile from '../../../tools/prompts/select-filesystem.js';
 import chalk from 'chalk';
 import findGameDirectory from '../../../utils/filesystem/game/find-game-directory.js';
+import Logger from '../../../utils/logger/logger.js';
 
 export default async function requestGameFolder() {
   const foundGameDirectory = findGameDirectory();
   if (!foundGameDirectory) {
-    console.warn(chalk.yellow('Victoria 3 game directory not found in common Steam locations'));
+    Logger.warn('Victoria 3 game directory not found in common Steam locations');
   }
   const GAME_FOLDER = await promptSelectFile({
     type: 'folder',

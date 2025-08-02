@@ -1,6 +1,7 @@
 import { exec } from 'child_process';
 import { CommandUse } from './types.js';
 import { Config } from '../utils/config/config.js';
+import Logger from '../utils/logger/logger.js';
 
 const command = 'open-game-folder';
 const use: CommandUse = (program) => {
@@ -23,8 +24,7 @@ function task(options: Options) {
   const folder = config.GAME_FOLDER;
 
   if (!folder) {
-    console.error('GAME_FOLDER environment variable is not set.');
-    process.exit(1);
+    Logger.kill('GAME_FOLDER environment variable is not set.');
   }
 
   let cmd;
@@ -41,8 +41,7 @@ function task(options: Options) {
         cmd = `xdg-open "${folder}"`;
         break;
       default:
-        console.error('Unsupported OS for opening explorer.');
-        process.exit(1);
+        Logger.kill(`Unsupported platform: ${process.platform}`);
     }
   } else {
     cmd = `code "${folder}"`;
@@ -50,8 +49,7 @@ function task(options: Options) {
 
   exec(cmd, (error, stdout, stderr) => {
     if (error) {
-      console.error(`Error opening game folder: ${stderr || stdout || error.message}`);
-      process.exit(1);
+      Logger.kill(`Error opening game folder: ${stderr || stdout || error.message}`);
     }
   });
 }

@@ -30,27 +30,32 @@ async function task(options: Options) {
   const modDestination = config.MOD_DESTINATION_FOLDER;
 
   if (!modSource || !modDestination) {
-    console.error('MOD_SOURCE, MOD_DESTINATION config setting is not set.');
-    process.exit(1);
+    Logger.kill('MOD_SOURCE, MOD_DESTINATION config setting is not set.');
   }
 
   const sourcePath = path.resolve(modSource);
   const destinationPath = path.resolve(modDestination);
 
   // Verify destination folder
-  if (options.ignoreModFolderWarning) {
+  if (!options.ignoreModFolderWarning) {
     const normalizedPath = destinationPath.toLowerCase().replace(/\\/g, '/');
+
+    //force destination to be a subfolder of the mod folder
     if (!normalizedPath.includes('victoria 3/mod')) {
-      console.warn(`⚠️ Destination does not the Victoria 3 Mod folder:\n  ${destinationPath}. Aborting.`);
-      console.info(`Use --ignore-mod-folder-warning to override.`);
-      process.exit(1);
+      Logger.fail(`Destination must be a folder within the Victoria 3 Mod folder: ${destinationPath}`);
+      Logger.fail(`Expected: .../Victoria 3/mod/<modName>`);
+      Logger.fail(`Received: ${destinationPath}`);
+      Logger.info(`Use --ignore-mod-folder-warning to override.`);
+      Logger.kill(`Aborting.`);
     }
 
+    //force destination NOT to be the mod folder itself
     if (normalizedPath.endsWith('victoria 3/mod') || normalizedPath.endsWith('victoria 3/mod/')) {
-      console.error(`❌ Destination cannot be the mod directory itself. It must be a specific mod folder within it.`);
-      console.error(`Expected: .../Victoria 3/mod/<modName>`);
-      console.error(`Got: ${destinationPath}`);
-      process.exit(1);
+      Logger.fail(`Destination cannot be the mod directory itself. It must be a specific mod folder within it.`);
+      Logger.fail(`Expected: .../Victoria 3/mod/<modName>`);
+      Logger.fail(`Received: ${destinationPath}`);
+      Logger.info(`Use --ignore-mod-folder-warning to override.`);
+      Logger.kill(`Aborting.`);
     }
   }
 

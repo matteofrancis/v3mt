@@ -41,8 +41,7 @@ function updateTasksFile(tasksFile: string) {
   const parsed: VSCodeTasks = jsonc.parse(content);
 
   if (!parsed || typeof parsed !== 'object') {
-    console.error('Invalid tasks.json format, aborting update.');
-    process.exit(1);
+    Logger.kill('Invalid tasks.json format, aborting update.');
   }
 
   const formattingOptions = { insertSpaces: true, tabSize: 2 };
@@ -98,7 +97,6 @@ function updateTasksFile(tasksFile: string) {
     fs.writeFileSync(tasksFile, content, 'utf8');
     Logger.pass('Updated tasks.json successfully');
   } catch (err) {
-    console.error('Failed to modify tasks.json:', err instanceof Error ? err.message : String(err));
-    process.exit(1);
+    Logger.kill('Failed to modify tasks.json');
   }
 }

@@ -1,7 +1,8 @@
 import fs from 'fs';
 import path from 'path';
+import Logger from '../../logger/logger.js';
 
-export default function findModSourceDirectory(searchPath = process.cwd()) {
+export default function findModSourceDirectory(searchPath = process.cwd(), required: boolean = false) {
   try {
     const items = fs.readdirSync(searchPath);
 
@@ -23,9 +24,12 @@ export default function findModSourceDirectory(searchPath = process.cwd()) {
     }
 
     return null;
-  } catch (error) {
-    //@ts-ignore
-    console.error('Failed to search for metadata directory:', error?.message);
-    return null;
+  } catch (error: any) {
+    if (required) {
+      Logger.kill(`Failed to search for metadata directory: ${error?.message}`);
+    } else {
+      Logger.fail(`Failed to search for metadata directory: ${error?.message}`);
+      return null;
+    }
   }
 }
